@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" href="https://1000logos.net/wp-content/uploads/2018/02/Porsche-Logo.png" type="image/png" />
+  <title>Porsche Showcase</title>
+
+  <!-- Font Awesome for Arrows -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" crossorigin="anonymous" />
+
+  <!-- Fonts -->
+  <link href="https://fonts.cdnfonts.com/css/ica-rubrik-black" rel="stylesheet" />
+  <link href="https://fonts.cdnfonts.com/css/poppins" rel="stylesheet" />
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background-color: #ffffcc;
+      background-image: repeating-linear-gradient(to right, transparent 0 100px, #25283b22 100px 101px),
+        repeating-linear-gradient(to bottom, transparent 0 100px, #25283b22 100px 101px);
+    }
+
+    body::before {
+      position: absolute;
+      width: min(1400px, 90vw);
+      top: 10%;
+      left: 50%;
+      height: 90%;
+      content: '';
+      background-image: url(images/bg.png);
+      background-size: 100%;
+      background-repeat: no-repeat;
+      background-position: top center;
+      pointer-events: none;
+      transform: translateX(-50%);
+    }
+
+    header {
+      display: flex;
+      align-items: center;
+      padding: 20px;
+      background: transparent;
+    }
+
+    header img {
+      height: 60px;
+    }
+
+    a {
+      text-decoration: none;
+    }
+
+    .social-icons-left {
+      position: fixed;
+      top: 50%;
+      left: 15px;
+      transform: translateY(-50%);
+      display: flex;
+      flex-direction: column;
+      background-color: #111;
+      padding: 15px 8px;
+      border-radius: 10px;
+      z-index: 1000;
+    }
+
+    .social-icons-left a {
+      color: white;
+      font-size: 22px;
+      margin: 10px 0;
+      text-align: center;
+      transition: transform 0.3s ease, color 0.3s ease;
+    }
+
+    .social-icons-left a:hover {
+      color: #1da1f2;
+      transform: scale(1.3);
+    }
+
+    .banner {
+      width: 100%;
+      height: 100vh;
+      text-align: center;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .slider {
+      position: absolute;
+      width: 200px;
+      height: 245px;
+      top: 10%;
+      left: calc(50% - 100px);
+      transform-style: preserve-3d;
+      transform: perspective(1000px) rotateX(-19deg) rotateY(0deg);
+      transition: transform 1s ease;
+      z-index: 2;
+    }
+
+    .slider .item {
+      position: absolute;
+      inset: 0 0 0 0;
+      transform: rotateY(calc((var(--position) - 1) * (360 / var(--quantity)) * 1deg)) translateZ(650px);
+    }
+
+    .slider .item img {
+      width: 120%;
+      height: 120%;
+      object-fit: cover;
+      border-radius: 20px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+      image-rendering: crisp-edges;
+      image-rendering: -webkit-optimize-contrast;
+      -webkit-backface-visibility: hidden;
+      backface-visibility: hidden;
+      transform: translateZ(0) translateY(-10px);
+      will-change: transform;
+    }
+
+    .content {
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: min(1400px, 100vw);
+      height: max-content;
+      padding-bottom: 100px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 1;
+    }
+
+    .content h1 {
+      font-family: 'ICA Rubrik';
+      font-size: 16em;
+      line-height: 1em;
+      color: #25283B;
+      position: relative;
+    }
+
+    .content h1::after {
+      position: absolute;
+      inset: 0 0 0 0;
+      content: attr(data-content);
+      z-index: 2;
+      -webkit-text-stroke: 2px #d2d2d2;
+      color: transparent;
+    }
+
+    .content .author {
+      font-family: 'Poppins', sans-serif;
+      text-align: right;
+      max-width: 200px;
+    }
+
+    .content h2 {
+      font-size: 3em;
+    }
+
+    .model {
+      background-image: url('file:///C:/Users/LENOVO/Downloads/car1.png');
+      width: 110%;
+      height: 90vh;
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      background-size: auto 65%;
+      background-repeat: no-repeat;
+      background-position: top;
+      z-index: 1;
+      display: block;
+    }
+
+    .arrow {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 30px;
+      background: rgba(0, 0, 0, 0.3);
+      padding: 10px;
+      color: white;
+      border-radius: 50%;
+      cursor: pointer;
+      z-index: 9999;
+    }
+
+    .arrow.left {
+      left: 140px;
+    }
+
+    .arrow.right {
+      right: 140px;
+    }
+
+    .register-btn {
+      position: fixed;
+      bottom: 10px;
+      left: 50%;
+      transform: translateX(-50%);
+      background-color: #111;
+      color: #fff;
+      font-family: 'Poppins', sans-serif;
+      padding: 12px 28px;
+      border-radius: 30px;
+      font-size: 1.2em;
+      text-align: center;
+      transition: 0.3s;
+      z-index: 1001;
+      text-decoration: none;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+    }
+
+    .register-btn:hover {
+      background-color: #333;
+      color: #1da1f2;
+      transform: translateX(-50%) scale(1.05);
+    }
+
+    @media screen and (max-width: 1023px) {
+      .slider {
+        width: 160px;
+        height: 200px;
+        left: calc(50% - 80px);
+      }
+
+      .slider .item {
+        transform: rotateY(calc((var(--position) - 1) * (360 / var(--quantity)) * 1deg)) translateZ(300px);
+      }
+
+      .content h1 {
+        text-align: center;
+        width: 200%;
+        text-shadow: 0 10px 20px #000;
+        font-size: 10em;
+      }
+
+      .content .author {
+        color: #fff;
+        padding: 20px;
+        text-shadow: 0 10px 20px #000;
+        z-index: 2;
+        max-width: unset;
+        width: 200%;
+        text-align: center;
+        padding: 0 30px;
+      }
+    }
+
+    @media screen and (max-width: 767px) {
+      .slider {
+        width: 100px;
+        height: 150px;
+        left: calc(50% - 50px);
+      }
+
+      .slider .item {
+        transform: rotateY(calc((var(--position) - 1) * (360 / var(--quantity)) * 1deg)) translateZ(180px);
+      }
+
+      .content h1 {
+        font-size: 5em;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <img src="https://1000logos.net/wp-content/uploads/2018/02/Porsche-Logo.png" alt="Car Logo" />
+  </header>
+
+  <div class="banner">
+    <div class="slider" id="slider" style="--quantity: 4">
+      <div class="item" style="--position: 1">
+        <a href="http://127.0.0.1:5501/index.html" target="_blank"><img src="C:\Users\LENOVO\Downloads\cc1.jpg" alt="caro1"></a>
+      </div>
+      <div class="item" style="--position: 2">
+        <a href="http://127.0.0.1:5500/index.html" target="_blank"><img src="C:\Users\LENOVO\Downloads\cc2.jpg" alt="caro2"></a>
+      </div>
+      <div class="item" style="--position: 3">
+        <a href="http://127.0.0.1:5502/index.html" target="_blank"><img src="C:\Users\LENOVO\Downloads\cc3.jpg" alt="caro3"></a>
+      </div>
+      <div class="item" style="--position: 4">
+        <a href="http://127.0.0.1:5503/index.html" target="_blank"><img src="C:\Users\LENOVO\Downloads\cc4.jpg" alt="caro4"></a>
+      </div>
+    </div>
+
+    <div class="arrow left" onclick="rotateSlider(-1)"><i class="fas fa-chevron-left"></i></div>
+    <div class="arrow right" onclick="rotateSlider(1)"><i class="fas fa-chevron-right"></i></div>
+
+    <div class="content">
+      <h1 data-content="PORSCHE 911">PORSCHE 911</h1>
+      <div class="author">
+        <h2>speedy</h2>
+        <p><b>Drive into Future</b></p>
+        <p>Explore Cars in 3D and Start Your Journey.</p>
+      </div>
+      <div class="model"></div>
+    </div>
+  </div>
+
+  <div class="social-icons-left">
+    <a href="https://www.instagram.com/porsche/" target="_blank"><i class="fab fa-instagram"></i></a>
+    <a href="https://www.facebook.com/porsche/" target="_blank"><i class="fab fa-facebook-f"></i></a>
+    <a href="https://twitter.com/porsche" target="_blank"><i class="fab fa-twitter"></i></a>
+    <a href="https://www.porsche.com/international/contactandinformation/contact/" target="_blank"><i class="fas fa-headset"></i></a>
+  </div>
+
+  <!-- Register Button -->
+  <a href="http://localhost:3000" class="register-btn" target="_blank">Register</a>
+
+  <script>
+    let angle = 0;
+    const slider = document.getElementById("slider");
+
+    function rotateSlider(direction) {
+      const rotationPerImage = 360 / parseInt(slider.style.getPropertyValue('--quantity'));
+      angle += direction * rotationPerImage;
+      slider.style.transform = `perspective(1000px) rotateX(-19deg) rotateY(${angle}deg)`;
+    }
+  </script>
+
+</body>
+</html>
